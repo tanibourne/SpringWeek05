@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -32,6 +33,17 @@ public class Post extends Timestamped {
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
   private List<Comment> comments;
+
+  @Column(nullable = true)
+  private Long heart;
+
+
+  @OneToMany(mappedBy="post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<HeartPost> heartPosts = new ArrayList<>();
+
+  public void updateHeart(Long heart) {
+    this.heart = heart;
+  }
 
   @JoinColumn(name = "member_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
