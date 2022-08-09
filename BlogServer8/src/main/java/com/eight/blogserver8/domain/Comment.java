@@ -2,15 +2,20 @@ package com.eight.blogserver8.domain;
 
 
 import com.eight.blogserver8.request.CommentRequestDto;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -29,13 +34,26 @@ public class Comment extends Timestamped {
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
 
+
   @JsonBackReference
+ // 무한루프 해결 (참조점)
+
   @JoinColumn(name = "post_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)  // 다대일
   private Post post;
 
   @Column(nullable = false)
   private String content;
+
+  @Column(nullable = true)
+  private Long heart;
+
+  public void updateHeart(Long heart) {
+    this.heart = heart;
+  }
+
+  @OneToMany(mappedBy = "comment" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<HeartComment> heartComments = new ArrayList<>();
 
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "comment")

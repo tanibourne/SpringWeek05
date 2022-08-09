@@ -1,7 +1,7 @@
 package com.eight.blogserver8.controller;
 
 
-import com.eight.blogserver8.controller.request.MypageRequestDto;
+
 import com.eight.blogserver8.controller.response.ResponseDto;
 import com.eight.blogserver8.service.MypageService;
 import lombok.RequiredArgsConstructor;

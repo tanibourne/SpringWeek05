@@ -2,15 +2,16 @@ package com.eight.blogserver8.domain;
 
 
 import com.eight.blogserver8.request.PostRequestDto;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -33,9 +34,21 @@ public class Post extends Timestamped {
   @Column
   private String imageUrl;
 
-  @JsonManagedReference
+
+  @JsonManagedReference /// 무한루프 매니저 점
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
   private List<Comment> comments;
+
+  @Column(nullable = true)
+  private Long heart;
+
+
+  @OneToMany(mappedBy="post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<HeartPost> heartPosts = new ArrayList<>();
+
+  public void updateHeart(Long heart) {
+    this.heart = heart;
+  }
 
   @JoinColumn(name = "member_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
