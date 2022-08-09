@@ -47,15 +47,34 @@ public class MypageService {
 //        String name = maybePerson.get().getName();
 //        Member findMember = memberRepository.findByNickname(mypageRequestDto.getNickname()).get(); // optional. get을해서 넣어줌..
 
+        // 내가 작성한글 모음 db에서 들고오기
         List<Post> postList = postRepository.findByMember(member);
         List<Comment> commentList = commentRepository.findByMember(member);
         List<SubComment> subCommentList = subCommentRepository.findByMember(member);
 
 
+        // 내가 좋아요한 글 db에서 들고오기
+//        Long postId = heartPostRepository.findByMember(member);
+//        List<Post> heartPostList = postRepository.findByPostId(1L);
+
+//        Long commentId = heartCommentRepository.findByMember(member);
+//        List<Comment> heartCommentList = commentRepository.findByCommentId(1L);
+
+//        Long subCommentId = heartSubCommentRepository.findByMember(member);
+//        List<SubComment> heartSubCommentList = subCommentRepository.findBySubCommentId(1L);
+
+
+
         MypageResponseDto mypageResponseDto = new MypageResponseDto();
+
+        // 내가 작성한 글 모음
         List<MypagePostResponseDto> postListDto = new ArrayList<>();
         List<MypageCommentResponseDto> commentListDto = new ArrayList<>();
         List<MypageSubCommentResponseDto> subcommentListDto = new ArrayList<>();
+        // 내가 좋아요한 글 모음..
+//        List<MypagePostResponseDto> heartPostListDto = new ArrayList<>();
+//        List<MypageCommentResponseDto> heartCommentListDto = new ArrayList<>();
+//        List<MypageSubCommentResponseDto> heartSubcommentListDto = new ArrayList<>();
 
         for( Post post : postList){
             postListDto.add(
@@ -63,6 +82,7 @@ public class MypageService {
                             .postId(post.getId())
                             .title(post.getTitle())
                             .postContent(post.getContent())
+                            .heart(post.getHeart())
                             .createdAt(post.getCreatedAt())
                             .modifiedAt(post.getModifiedAt())
                             .build()
@@ -75,6 +95,7 @@ public class MypageService {
                     MypageCommentResponseDto.builder()
                             .commentId(comment.getId())
                             .commentContent(comment.getContent())
+                            .heart(comment.getHeart())
                             .createdAt(comment.getCreatedAt())
                             .modifiedAt(comment.getModifiedAt())
                             .build()
@@ -86,11 +107,52 @@ public class MypageService {
                     MypageSubCommentResponseDto.builder()
                             .subCommentId(subComment.getId())
                             .subCommentContent(subComment.getContent())
+                            .heart(subComment.getHeart())
                             .createdAt(subComment.getCreatedAt())
                             .modifiedAt(subComment.getModifiedAt())
                             .build()
             );
         }
+
+        //        for(Post post : heartPostList){
+//            heartPostListDto.add(
+//                    MypagePostResponseDto.builder()
+//                            .postId(post.getId())
+//                            .title(post.getTitle())
+//                            .postContent(post.getContent())
+//                            .heart(post.getHeart())
+//                            .createdAt(post.getCreatedAt())
+//                            .modifiedAt(post.getModifiedAt())
+//                            .build()
+//            );
+//
+//        }
+//
+//        for (Comment comment : heartCommentList){
+//            heartCommentListDto.add(
+//                    MypageCommentResponseDto.builder()
+//                            .commentId(comment.getId())
+//                            .commentContent(comment.getContent())
+//                            .heart(comment.getHeart())
+//                            .createdAt(comment.getCreatedAt())
+//                            .modifiedAt(comment.getModifiedAt())
+//                            .build()
+//            );
+//        }
+//
+//        for(SubComment subComment : heartSubCommentList){
+//            heartSubcommentListDto.add(
+//                    MypageSubCommentResponseDto.builder()
+//                            .subCommentId(subComment.getId())
+//                            .subCommentContent(subComment.getContent())
+//                            .heart(subComment.getHeart())
+//                            .createdAt(subComment.getCreatedAt())
+//                            .modifiedAt(subComment.getModifiedAt())
+//                            .build()
+//            );
+//        }
+
+
 
 //        mypage.update(findMember,postList,commentList,subCommentList);// 마이페이지 객체에 업데이트
 //        mypageRepository.save(mypage);   // 저장하는게 아니다.

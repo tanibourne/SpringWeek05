@@ -19,6 +19,9 @@ public class MypageResponseDto {
     private List postList;
     private List commentList;
     private List subCommentList;
+    private List heartPostList;
+    private List heartCommentList;
+    private List heartSubCommentList;
 
     public void update(
             List<MypagePostResponseDto> postListDto,
