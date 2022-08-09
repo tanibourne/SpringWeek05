@@ -1,6 +1,5 @@
 package com.eight.blogserver8.service;
 
-import com.eight.blogserver8.controller.request.MypageRequestDto;
 import com.eight.blogserver8.controller.response.*;
 import com.eight.blogserver8.domain.*;
 import com.eight.blogserver8.jwt.TokenProvider;
