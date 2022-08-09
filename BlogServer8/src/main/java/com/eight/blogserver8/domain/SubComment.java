@@ -24,6 +24,7 @@ public class SubComment extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+
     @JoinColumn(name = "comment_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
