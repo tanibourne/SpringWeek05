@@ -27,6 +27,7 @@ import com.eight.blogserver8.repository.SubCommentRepository;
 import com.eight.blogserver8.request.PostRequestDto;
 import com.eight.blogserver8.shared.CommonUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +39,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -293,6 +294,8 @@ public class PostService {
         postRepository.delete(post);
         return ResponseDto.success("delete success");
     }
+
+
 
     @Transactional(readOnly = true)
     public Post isPresentPost(Long id) {

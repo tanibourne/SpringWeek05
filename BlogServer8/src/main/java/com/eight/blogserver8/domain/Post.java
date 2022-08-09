@@ -2,7 +2,9 @@ package com.eight.blogserver8.domain;
 
 
 import com.eight.blogserver8.request.PostRequestDto;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +33,7 @@ public class Post extends Timestamped {
 
   @Column
   private String imageUrl;
+
 
   @JsonManagedReference /// 무한루프 매니저 점
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
