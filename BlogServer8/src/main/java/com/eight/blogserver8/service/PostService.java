@@ -152,6 +152,7 @@ public class PostService {
                         .id(post.getId())
                         .title(post.getTitle())
                         .content(post.getContent())
+                        .heart(post.getHeartPosts().size())
                         .commentResponseDtoList(commentResponseDtoList)
                         .author(post.getMember().getNickname())
                         .createdAt(post.getCreatedAt())
@@ -160,6 +161,8 @@ public class PostService {
                         .build()
         );
     }
+
+
 
     @Transactional(readOnly = true)
     public ResponseDto<?> getAllPost() {
@@ -180,6 +183,9 @@ public class PostService {
             // 결과 저장 리스트에 담기
             dtoList.add(postListResponseDto);
         }
+
+
+
 
         return ResponseDto.success(dtoList);
 
