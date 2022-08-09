@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -33,6 +34,16 @@ public class Comment extends Timestamped {
 
   @Column(nullable = false)
   private String content;
+
+  @Column(nullable = true)
+  private Long heart;
+
+  public void updateHeart(Long heart) {
+    this.heart = heart;
+  }
+
+  @OneToMany(mappedBy = "comment" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<HeartComment> heartComments = new ArrayList<>();
 
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "comment")
