@@ -161,7 +161,7 @@ public class HeartService {
         // 댓글 좋아요 업데이트
         Long heart = heartCommentRepository.countAllByCommentId(comment.getId());
         comment.updateHeart(heart);
-
+        commentRepository.save(comment);
 
         List<SubComment> subCommentList = subCommentRepository.findAllByComment(comment);
         List<SubCommentResponseDto> subCommentResponseDtoList = new ArrayList<>();
@@ -227,10 +227,11 @@ public class HeartService {
                 .build();
         heartSubCommentRepository.save(heartSubComment);
 
+
         // 대댓글 좋아요 업데이트
         Long heart = heartSubCommentRepository.countAllBySubCommentId(subComment.getId());
         subComment.updateHeart(heart);
-
+        subCommentRepository.save(subComment);
 
         SubCommentResponseDto subCommentResponseDto = SubCommentResponseDto.builder()
                 .id(subComment.getId())
@@ -279,6 +280,7 @@ public class HeartService {
         // 게시물 좋아요 업데이트
         Long heart = heartPostRepository.countAllByPostId(post.getId());
         post.updateHeart(heart);
+        postRepository.save(post);
 
         // 댓글 리스트의 Dto화
         List<Comment> commentList = commentRepository.findAllByPost(post);
@@ -366,6 +368,7 @@ public class HeartService {
         // 댓글 좋아요 업데이트
         Long heart = heartCommentRepository.countAllByCommentId(comment.getId());
         comment.updateHeart(heart);
+        commentRepository.save(comment);
 
 
         List<SubComment> subCommentList = subCommentRepository.findAllByComment(comment);
@@ -430,6 +433,7 @@ public class HeartService {
             // 대댓글 좋아요 업데이트
             Long heart = heartSubCommentRepository.countAllBySubCommentId(subComment.getId());
             subComment.updateHeart(heart);
+        subCommentRepository.save(subComment);
 
 
             SubCommentResponseDto subCommentResponseDto = SubCommentResponseDto.builder()
