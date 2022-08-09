@@ -1,13 +1,11 @@
 package com.eight.blogserver8.service;
 
 
-import com.eight.blogserver8.controller.response.SubCommentResponseDto;
+import com.eight.blogserver8.controller.response.*;
 import com.eight.blogserver8.domain.SubComment;
+import com.eight.blogserver8.repository.HeartPostRepository;
 import com.eight.blogserver8.repository.SubCommentRepository;
 import com.eight.blogserver8.request.PostRequestDto;
-import com.eight.blogserver8.controller.response.CommentResponseDto;
-import com.eight.blogserver8.controller.response.PostResponseDto;
-import com.eight.blogserver8.controller.response.ResponseDto;
 import com.eight.blogserver8.domain.Comment;
 import com.eight.blogserver8.domain.Member;
 import com.eight.blogserver8.domain.Post;
@@ -31,6 +29,8 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     private final SubCommentRepository subCommentRepository;
+
+    private final HeartPostRepository heartPostRepository;
 
     private final TokenProvider tokenProvider;
 
@@ -120,7 +120,27 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public ResponseDto<?> getAllPost() {
-        return ResponseDto.success(postRepository.findAllByOrderByModifiedAtDesc());
+
+        //게시글 목록 response에 id, 제목, 작성자, 좋아요 개수, 대댓글 제외한 댓글 개수, 등록일, 수정일 나타내기
+
+        List<Post> allByOrderByModifiedAtDesc = postRepository.findAllByOrderByModifiedAtDesc();
+        // 요구사항에 리스트 선언
+        List<PostListResponseDto> dtoList = new ArrayList<>();
+
+        for (Post post : allByOrderByModifiedAtDesc) {
+            // 게시글 아이디
+            Long postId = post.getId();
+            // 게시글 좋아요 개수 세기
+            long heartCount = heartPostRepository.countAllByPostId(postId);
+
+            PostListResponseDto postListResponseDto = new PostListResponseDto(post, heartCount);
+            // 결과 저장 리스트에 담기
+            dtoList.add(postListResponseDto);
+        }
+
+        return ResponseDto.success(dtoList);
+
+
     }
 
     @Transactional
