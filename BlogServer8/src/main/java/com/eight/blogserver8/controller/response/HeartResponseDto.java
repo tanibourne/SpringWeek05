@@ -1,5 +1,6 @@
 package com.eight.blogserver8.controller.response;
 
+import com.eight.blogserver8.controller.response.CommentResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,11 +13,17 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubCommentResponseDto {
+public class HeartResponseDto {
+
     private Long id;
-    private String nickname;
+    private String title;
     private String content;
+    private String author;
+    private List<CommentResponseDto> commentResponseDtoList;
     private Long heart;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+
+
+
 }
