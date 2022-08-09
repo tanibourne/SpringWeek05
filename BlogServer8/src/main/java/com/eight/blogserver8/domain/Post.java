@@ -28,6 +28,9 @@ public class Post extends Timestamped {
   @Column(nullable = false)
   private String content;
 
+  @Column
+  private String imageUrl;
+
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
   private List<Comment> comments;
 
@@ -49,6 +52,10 @@ public class Post extends Timestamped {
   public void update(PostRequestDto postRequestDto) {
     this.title = postRequestDto.getTitle();
     this.content = postRequestDto.getContent();
+  }
+
+  public void updateImage(String imageUrl){
+    this.imageUrl = imageUrl;
   }
 
   public boolean validateMember(Member member) {
