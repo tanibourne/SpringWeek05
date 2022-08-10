@@ -153,7 +153,7 @@ public class HeartService {
 
         // 좋아요 저장
         HeartComment heartComment = HeartComment.builder()
-                .member(comment.getMember())
+                .member(member) //comment.getMember() 코멘트 작성한 사람이 좋아요이름으로 나옴.
                 .comment(comment)
                 .build();
         heartCommentRepository.save(heartComment);
@@ -222,7 +222,7 @@ public class HeartService {
 
         // 좋아요 저장
         HeartSubComment heartSubComment = HeartSubComment.builder()
-                .member(subComment.getMember())
+                .member(member) ///subComment.getMember() 코멘트 작성한 사람이 좋아요이름으로 나옴.
                 .subComment(subComment)
                 .build();
         heartSubCommentRepository.save(heartSubComment);
