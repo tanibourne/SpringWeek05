@@ -17,6 +17,7 @@ public class MypagePostResponseDto {
     private Long postId;
     private String title;
     private String postContent;
+    private String imageUrl;
     private Long heart;
 
     @CreatedDate
