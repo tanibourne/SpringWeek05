@@ -245,17 +245,24 @@ public class PostService {
 
         String imageUrl = null;
         if (!multipartFile.isEmpty()) {
+
             String fileName = CommonUtils.buildFileName(multipartFile.getOriginalFilename());
 
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentType(multipartFile.getContentType());
 
-            InputStream inputStream = multipartFile.getInputStream();
-            amazonS3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
+           try( InputStream inputStream = multipartFile.getInputStream() ) {
+               amazonS3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata)
+                       .withCannedAcl(CannedAccessControlList.PublicRead));
 
 
-            imageUrl = amazonS3Client.getUrl(bucketName, fileName).toString();
+               imageUrl = amazonS3Client.getUrl(bucketName, fileName).toString();
+
+           }
+           catch (IOException e){
+               throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생하였습니다 (%s)", multipartFile.getOriginalFilename()));
+           }
+
         }
 
         post.updateImage(imageUrl);
