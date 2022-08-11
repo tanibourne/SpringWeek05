@@ -2,7 +2,13 @@ package com.eight.blogserver8.domain;
 
 
 import com.eight.blogserver8.request.CommentRequestDto;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+
 public class Comment extends Timestamped {
 
   @Id
@@ -27,7 +34,10 @@ public class Comment extends Timestamped {
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
 
-  @JsonManagedReference // 무한루프 해결 (참조점)
+
+  @JsonBackReference
+ // 무한루프 해결 (참조점)
+
   @JoinColumn(name = "post_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)  // 다대일
   private Post post;
