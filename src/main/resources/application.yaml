@@ -1,0 +1,36 @@
+server:
+  servlet:
+    encoding:
+      force: 'true'
+      enabled: 'true'
+      charset: utf-8
+cloud:
+  aws:
+    s3:
+      bucket: tt
+    credentials:
+      accessKey: '1'
+      secretKey: '33'
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: 'false'
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  jpa:
+    hibernate:
+      ddl-auto: update
+  profiles:
+    include: aws
+  datasource:
+    password: fefeqwq
+    username: '12555'
+    url: jdbc:mysql://123
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: 'false'
+jwt:
+  secret: fewferwfgergergergergerger

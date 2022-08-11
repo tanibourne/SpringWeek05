@@ -16,6 +16,9 @@ on:
 permissions:
   contents: read
 
+env:
+  RESOURCE_PATH: ./src/main/resources/application.yaml
+
 jobs:
   build:
 
@@ -28,6 +31,19 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+      - name: Generate Environment Variables File for Properties
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ${{ env.RESOURCE_PATH }}
+        env:
+          cloud.aws.credentials.accessKey: ${{ secrets.AWS_ACCESS_KEY }}
+          cloud.aws.credentials.secretKey: ${{ secrets.AWS_SECRET_KEY }}
+          spring.datasource.url:  ${{ secrets.RDS_URL }}
+          spring.datasource.username: ${{ secrets.RDS_USERNAME }}
+          spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
+          jwt.secret: ${{ secrets.JWT_SECRET_KEY }}
+          cloud.aws.s3.bucket: ${{ secrets.S3_BUCKET_NAME }}
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -54,7 +70,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-        run: aws s3 cp --region ap-northeast-2 --acl private ./springboot-intro-build.zip s3://teameightbucket/
+        run: aws s3 cp --region ap-northeast-2 --acl private ./springboot-intro-build.zip s3://${{ secrets.S3_BUCKET_NAME }}/
 
           # Deploy
       - name: Deploy
