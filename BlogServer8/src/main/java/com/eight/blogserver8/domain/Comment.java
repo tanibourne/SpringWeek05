@@ -23,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+
 public class Comment extends Timestamped {
 
   @Id
@@ -46,7 +46,7 @@ public class Comment extends Timestamped {
   private String content;
 
   @Column(nullable = true)
-  private Long heart;
+  @Builder.Default private Long heart = 0l;
 
   public void updateHeart(Long heart) {
     this.heart = heart;

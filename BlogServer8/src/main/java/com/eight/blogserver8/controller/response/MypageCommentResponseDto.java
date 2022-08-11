@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class MypageCommentResponseDto {
     private Long commentId;
     private String commentContent;
+    private Long heart;
     @CreatedDate
     private LocalDateTime createdAt;
 
