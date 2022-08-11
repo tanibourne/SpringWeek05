@@ -116,7 +116,7 @@ public class PostService {
     public ResponseDto<?> getPost(Long id) {
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         List<Comment> commentList = commentRepository.findAllByPost(post);
@@ -131,6 +131,7 @@ public class PostService {
                                 .id(subComment.getId())
                                 .nickname(subComment.getMember().getNickname())
                                 .content(subComment.getContent())
+                                .heart(subComment.getHeart())
                                 .createdAt(subComment.getCreatedAt())
                                 .modifiedAt(subComment.getModifiedAt())
                                 .build()
@@ -141,6 +142,7 @@ public class PostService {
                             .id(comment.getId())
                             .author(comment.getMember().getNickname())
                             .content(comment.getContent())
+                            .heart(comment.getHeart())
                             .subCommentResponseDtoList(subCommentResponseDtoList)
                             .createdAt(comment.getCreatedAt())
                             .modifiedAt(comment.getModifiedAt())
@@ -153,6 +155,7 @@ public class PostService {
                         .id(post.getId())
                         .title(post.getTitle())
                         .content(post.getContent())
+                        .heart(post.getHeartPosts().size())
                         .commentResponseDtoList(commentResponseDtoList)
                         .author(post.getMember().getNickname())
                         .createdAt(post.getCreatedAt())
@@ -161,6 +164,8 @@ public class PostService {
                         .build()
         );
     }
+
+
 
     @Transactional(readOnly = true)
     public ResponseDto<?> getAllPost() {
@@ -181,6 +186,9 @@ public class PostService {
             // 결과 저장 리스트에 담기
             dtoList.add(postListResponseDto);
         }
+
+
+
 
         return ResponseDto.success(dtoList);
 
@@ -206,7 +214,7 @@ public class PostService {
 
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         if (post.validateMember(member)) {
@@ -236,7 +244,7 @@ public class PostService {
 
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         if (post.validateMember(member)) {
@@ -291,7 +299,7 @@ public class PostService {
 
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         if (post.validateMember(member)) {
