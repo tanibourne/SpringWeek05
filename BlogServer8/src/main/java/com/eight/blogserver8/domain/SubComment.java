@@ -39,7 +39,7 @@ public class SubComment extends Timestamped {
 
 
     @OneToMany(mappedBy="subComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<HeartSubComment> heartSubComments = new ArrayList<>();
+    private List<HeartSubComment> heartSubComments ;
 
     public void updateHeart(Long heart) {
         this.heart = heart;

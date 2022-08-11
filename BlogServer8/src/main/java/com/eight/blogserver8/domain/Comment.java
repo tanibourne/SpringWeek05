@@ -53,7 +53,7 @@ public class Comment extends Timestamped {
   }
 
   @OneToMany(mappedBy = "comment" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<HeartComment> heartComments = new ArrayList<>();
+  private List<HeartComment> heartComments ;
 
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "comment")

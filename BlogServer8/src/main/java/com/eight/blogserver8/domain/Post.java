@@ -40,11 +40,11 @@ public class Post extends Timestamped {
   private List<Comment> comments;
 
   @Column(nullable = true)
-  private Long heart = 0l;
+  private Long heart;
 
 
   @OneToMany(mappedBy="post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<HeartPost> heartPosts = new ArrayList<>();
+  private List<HeartPost> heartPosts;
 
   public void updateHeart(Long heart) {
     this.heart = heart;
