@@ -36,7 +36,7 @@ public class Comment extends Timestamped {
   private String content;
 
   @Column(nullable = true)
-  private Long heart;
+  @Builder.Default private Long heart = 0l;
 
   public void updateHeart(Long heart) {
     this.heart = heart;

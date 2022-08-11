@@ -37,7 +37,7 @@ public class Post extends Timestamped {
   private List<Comment> comments;
 
   @Column(nullable = true)
-  private Long heart;
+  private Long heart = 0l;
 
 
   @OneToMany(mappedBy="post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

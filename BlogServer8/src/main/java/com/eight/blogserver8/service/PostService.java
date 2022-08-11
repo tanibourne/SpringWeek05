@@ -115,7 +115,7 @@ public class PostService {
     public ResponseDto<?> getPost(Long id) {
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         List<Comment> commentList = commentRepository.findAllByPost(post);
@@ -213,7 +213,7 @@ public class PostService {
 
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         if (post.validateMember(member)) {
@@ -243,7 +243,7 @@ public class PostService {
 
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         if (post.validateMember(member)) {
@@ -291,7 +291,7 @@ public class PostService {
 
         Post post = isPresentPost(id);
         if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
+            return ResponseDto.fail("200", "존재하지 않는 게시글 id 입니다.");
         }
 
         if (post.validateMember(member)) {

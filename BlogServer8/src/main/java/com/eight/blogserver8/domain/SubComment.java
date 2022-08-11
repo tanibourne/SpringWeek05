@@ -35,7 +35,7 @@ public class SubComment extends Timestamped {
     private String content;
 
     @Column(nullable = true)
-    private Long heart;
+    private Long heart=0l;
 
 
     @OneToMany(mappedBy="subComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
